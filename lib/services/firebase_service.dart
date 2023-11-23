@@ -11,7 +11,12 @@ Future<List> getPeople() async {
 
   for (var document in queryPeople.docs) { 
     //es una lista no un array, tons es add no push
-    people.add(document.data());
+    final Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    final person = {
+      "uid" : document.id,
+      "name" : data['name'],
+    };
+    people.add(person);
   }
 
   return people;
@@ -20,4 +25,14 @@ Future<List> getPeople() async {
 //Save Person on db
 Future<void> addPerson(String name) async {
   await db.collection('people').add({"name": name});
+}
+
+//Update Person on db
+Future<void> updatePerson(String uid, String name) async {
+  await db.collection('people').doc(uid).update({"name": name});
+}
+
+//Delete Person on db
+Future<void> deletePerson(String uid) async {
+  await db.collection('people').doc(uid).delete();
 }

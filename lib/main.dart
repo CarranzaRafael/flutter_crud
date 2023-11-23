@@ -1,4 +1,5 @@
 import 'package:app/pages/add_person.dart';
+import 'package:app/pages/edit_person.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
-        '/addPerson' : (context) => const AddPersonPage()
+        '/addPerson' : (context) => const AddPersonPage(),
+        '/editPerson': (context) => const EditPersonPage(),
       },
     );
   }
