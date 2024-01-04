@@ -22,9 +22,37 @@ Future<List> getPeople() async {
   return people;
 }
 
+Future<List> getGroming() async {
+  List allGrooms = [];
+  CollectionReference collectionReferenceGrooming = db.collection("grooming");
+  QuerySnapshot queryGrooming = await collectionReferenceGrooming.get();
+
+  for(var document in queryGrooming.docs){
+    final Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    final groom = {
+      'uid' : document.id,
+      'dogId' : data['dog_id'],
+      'date' : data['date'],
+      'paymentType': data['payment_type']
+    };
+    allGrooms.add(groom);
+  }
+
+  return allGrooms;
+}
+
 //Save Person on db
-Future<void> addPerson(String name) async {
-  await db.collection('people').add({"name": name});
+Future<void> addPerson(String name, String tel, String tel2, String tel3, String ubi, String dob ) async {
+  await db.collection('people').add(
+    {
+      "name": name,
+      "tel": tel,
+      "tel2": tel2,
+      "tel3": tel3,
+      "ubi": ubi,
+      "dob": dob
+    }
+    );
 }
 
 //Update Person on db
